@@ -23,15 +23,22 @@ std::vector<moveit_msgs::CollisionObject> CreateCollisionObjects() {
   // Define box dimensions
   box.primitives.resize(1);
   box.primitives[0].type = shape_msgs::SolidPrimitive::BOX;
-  box.primitives[0].dimensions = {0.2, 0.2, 0.2};
+  box.primitives[0].dimensions = {0.02, 0.02, 0.02};
 
   // Define the pose of the object
   box.primitive_poses.resize(1);
   box.primitive_poses[0].position.x = 0.0;
-  box.primitive_poses[0].position.y = 1.0;
+  box.primitive_poses[0].position.y = 0.0;
   box.primitive_poses[0].position.z = 0;
+  box.primitive_poses[0].orientation.x = 0.0;
+  box.primitive_poses[0].orientation.y = 0.0;
+  box.primitive_poses[0].orientation.z = 0.0;
   box.primitive_poses[0].orientation.w = 1.0;
   box.operation = moveit_msgs::CollisionObject::ADD;
+  box.pose.position.x = 0.0;
+  box.pose.position.y = 1.0;
+  box.pose.position.z = 0.0;
+  box.pose.orientation.w = 1.0;
 
   return {box};
 }
@@ -45,7 +52,7 @@ int main(int argc, char **argv) {
   // Add collision objects to scene
   const auto collision_objects = CreateCollisionObjects();
   moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
-  planning_scene_interface.applyCollisionObjects(std::move(collision_objects));
+  planning_scene_interface.applyCollisionObjects(collision_objects);
 
   // Wait a bit for ROS things to initialize
   ros::WallDuration(1.0).sleep();
