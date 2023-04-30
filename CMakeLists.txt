@@ -57,4 +57,14 @@ add_executable(scene src/scene.cpp)
 target_link_libraries(scene ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS scene DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+add_executable(pick_and_place src/pick_and_place.cpp)
+target_link_libraries(pick_and_place ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS pick_and_place DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+add_executable(full_example src/full_example.cpp)
+target_link_libraries(full_example ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS full_example DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+install(DIRECTORY config DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
