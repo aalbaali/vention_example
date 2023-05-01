@@ -45,7 +45,7 @@ public:
     // Check collision objects if world objects are not found
     if (object_it != objects.end()) {
       ROS_DEBUG_STREAM("'" << object_id_ << "' \033[92;1mfound\033[0m");
-      object_pose.pose = object_it->pose;
+      object_pose.pose = object_it->primitive_poses.front();
       object_pose.header = object_it->header;
       object_found = true;
     }
@@ -57,7 +57,7 @@ public:
         attached_objects.cbegin(), attached_objects.cend(),
         [this](const auto & object) { return object.object.id == object_id_; });
       if (attached_object_it != attached_objects.cend()) {
-        object_pose.pose = attached_object_it->object.pose;
+        object_pose.pose = attached_object_it->object.primitive_poses.front();
         object_pose.header = attached_object_it->object.header;
         object_found = true;
       }
