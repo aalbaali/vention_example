@@ -1,0 +1,11 @@
+<launch>
+  <!-- Run the demo launch file -->
+  <include file="$(dirname)/demo.launch" pass_all_args="true"/>
+
+
+  <!-- Scene node that shows the vector -->
+  <node pkg="vention_example" type="scene" name="scene" />
+
+  <!-- Run the pick-and-play example -->
+  <node pkg="vention_example" type="pick_place_tutorial" name="pick_place_tutorial" />
+</launch>
