@@ -8,7 +8,7 @@ docker build . -f Dockerfile --target dev -t noetic-vention:dev
 ```
 To start the container, change directory into the package directory, and run the following
 ```bash
-docker run -it -e DISPLAY=$DISPLAY -e DOCKER_REPO_TAG="noetic-vention:dev" -v $PWD:/home/ros/ros_ws/src/vention_example -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.ssh:/home/ros/.ssh -v ~/.zsh_history:/home/ros/.zsh_history -v ~/shared:/home/ros/shared --network host --hostname noetic --name noetic-vention noetic-vention:dev
+docker run -it -e DISPLAY=$DISPLAY -e DOCKER_REPO_TAG="noetic-vention:dev" -v $PWD:/home/ros/ros_ws/src/vention_example -v /tmp/.X11-unix:/tmp/.X11-unix -v ~/.ssh:/home/ros/.ssh --network host --hostname noetic --name noetic-vention noetic-vention:dev
 ```
 
 ## Creating a catkin workspace
