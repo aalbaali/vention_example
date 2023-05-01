@@ -11,7 +11,8 @@
 // The circle constant tau = 2*pi. One tau is one rotation in radians.
 const double tau = 2 * M_PI;
 
-void openGripper(trajectory_msgs::JointTrajectory &posture) {
+void openGripper(trajectory_msgs::JointTrajectory & posture)
+{
   // Add both finger joints of panda robot
   posture.joint_names.resize(2);
   posture.joint_names[0] = "panda_finger_joint1";
@@ -25,7 +26,8 @@ void openGripper(trajectory_msgs::JointTrajectory &posture) {
   posture.points[0].time_from_start = ros::Duration(0.5);
 }
 
-void closedGripper(trajectory_msgs::JointTrajectory &posture) {
+void closedGripper(trajectory_msgs::JointTrajectory & posture)
+{
   // BEGIN_SUB_TUTORIAL closed_gripper
   /* Add both finger joints of panda robot. */
   posture.joint_names.resize(2);
@@ -41,7 +43,8 @@ void closedGripper(trajectory_msgs::JointTrajectory &posture) {
   // END_SUB_TUTORIAL
 }
 
-void pick(moveit::planning_interface::MoveGroupInterface &move_group) {
+void pick(moveit::planning_interface::MoveGroupInterface & move_group)
+{
   // BEGIN_SUB_TUTORIAL pick1
   // Create a vector of grasps to be attempted, currently only creating single
   // grasp. This is essentially useful when using a grasp generator to generate
@@ -101,7 +104,8 @@ void pick(moveit::planning_interface::MoveGroupInterface &move_group) {
   // END_SUB_TUTORIAL
 }
 
-void place(moveit::planning_interface::MoveGroupInterface &group) {
+void place(moveit::planning_interface::MoveGroupInterface & group)
+{
   // BEGIN_SUB_TUTORIAL place
   // TODO(@ridhwanluthra) - Calling place function may lead to "All supplied
   // place locations failed. Retrying last location in verbose mode." This is a
@@ -115,7 +119,7 @@ void place(moveit::planning_interface::MoveGroupInterface &group) {
   // +++++++++++++++++++++++++++
   place_location[0].place_pose.header.frame_id = "panda_link0";
   tf2::Quaternion orientation;
-  orientation.setRPY(0, 0, tau / 4); // A quarter turn about the z-axis
+  orientation.setRPY(0, 0, tau / 4);  // A quarter turn about the z-axis
   place_location[0].place_pose.pose.orientation = tf2::toMsg(orientation);
 
   /* For place location, we set the value to the exact location of the center of
@@ -127,8 +131,7 @@ void place(moveit::planning_interface::MoveGroupInterface &group) {
   // Setting pre-place approach
   // ++++++++++++++++++++++++++
   /* Defined with respect to frame_id */
-  place_location[0].pre_place_approach.direction.header.frame_id =
-      "panda_link0";
+  place_location[0].pre_place_approach.direction.header.frame_id = "panda_link0";
   /* Direction is set as negative z axis */
   place_location[0].pre_place_approach.direction.vector.z = -1.0;
   place_location[0].pre_place_approach.min_distance = 0.095;
@@ -137,8 +140,7 @@ void place(moveit::planning_interface::MoveGroupInterface &group) {
   // Setting post-grasp retreat
   // ++++++++++++++++++++++++++
   /* Defined with respect to frame_id */
-  place_location[0].post_place_retreat.direction.header.frame_id =
-      "panda_link0";
+  place_location[0].post_place_retreat.direction.header.frame_id = "panda_link0";
   /* Direction is set as negative y axis */
   place_location[0].post_place_retreat.direction.vector.y = -1.0;
   place_location[0].post_place_retreat.min_distance = 0.1;
@@ -156,7 +158,8 @@ void place(moveit::planning_interface::MoveGroupInterface &group) {
   // END_SUB_TUTORIAL
 }
 
-int main(int argc, char **argv) {
+int main(int argc, char ** argv)
+{
   ros::init(argc, argv, "panda_arm_pick_place");
   ros::NodeHandle nh;
   ros::AsyncSpinner spinner(1);
@@ -168,7 +171,7 @@ int main(int argc, char **argv) {
   //planning_scene_interface.get
   const auto object_names = planning_scene_interface.getKnownObjectNames();
   const auto objects = planning_scene_interface.getObjectPoses(object_names);
-  for (const auto& object : objects) {
+  for (const auto & object : objects) {
     std::cout << object.first << ": " << object.second << std::endl;
   }
 

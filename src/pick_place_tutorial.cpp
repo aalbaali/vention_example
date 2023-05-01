@@ -4,8 +4,8 @@
 #include <ros/ros.h>
 
 // MoveIt
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
 #include <moveit/move_group_interface/move_group_interface.h>
+#include <moveit/planning_scene_interface/planning_scene_interface.h>
 
 // TF2
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
@@ -13,7 +13,7 @@
 // The circle constant tau = 2*pi. One tau is one rotation in radians.
 const double tau = 2 * M_PI;
 
-void openGripper(trajectory_msgs::JointTrajectory& posture)
+void openGripper(trajectory_msgs::JointTrajectory & posture)
 {
   // BEGIN_SUB_TUTORIAL open_gripper
   /* Add both finger joints of panda robot. */
@@ -30,7 +30,7 @@ void openGripper(trajectory_msgs::JointTrajectory& posture)
   // END_SUB_TUTORIAL
 }
 
-void closedGripper(trajectory_msgs::JointTrajectory& posture)
+void closedGripper(trajectory_msgs::JointTrajectory & posture)
 {
   // BEGIN_SUB_TUTORIAL closed_gripper
   /* Add both finger joints of panda robot. */
@@ -47,7 +47,7 @@ void closedGripper(trajectory_msgs::JointTrajectory& posture)
   // END_SUB_TUTORIAL
 }
 
-void pick(moveit::planning_interface::MoveGroupInterface& move_group)
+void pick(moveit::planning_interface::MoveGroupInterface & move_group)
 {
   // BEGIN_SUB_TUTORIAL pick1
   // Create a vector of grasps to be attempted, currently only creating single grasp.
@@ -106,7 +106,7 @@ void pick(moveit::planning_interface::MoveGroupInterface& move_group)
   // END_SUB_TUTORIAL
 }
 
-void place(moveit::planning_interface::MoveGroupInterface& group)
+void place(moveit::planning_interface::MoveGroupInterface & group)
 {
   // BEGIN_SUB_TUTORIAL place
   // TODO(@ridhwanluthra) - Calling place function may lead to "All supplied place locations failed. Retrying last
@@ -159,7 +159,8 @@ void place(moveit::planning_interface::MoveGroupInterface& group)
   // END_SUB_TUTORIAL
 }
 
-void addCollisionObjects(moveit::planning_interface::PlanningSceneInterface& planning_scene_interface)
+void addCollisionObjects(
+  moveit::planning_interface::PlanningSceneInterface & planning_scene_interface)
 {
   // BEGIN_SUB_TUTORIAL table1
   //
@@ -240,7 +241,7 @@ void addCollisionObjects(moveit::planning_interface::PlanningSceneInterface& pla
   planning_scene_interface.applyCollisionObjects(collision_objects);
 }
 
-int main(int argc, char** argv)
+int main(int argc, char ** argv)
 {
   ros::init(argc, argv, "panda_arm_pick_place");
   ros::NodeHandle nh;

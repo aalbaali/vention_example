@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <geometry_msgs/PoseStamped.h>
 #include <log4cxx/helpers/object.h>
 #include <moveit_msgs/CollisionObject.h>
@@ -8,18 +7,19 @@
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <visualization_msgs/Marker.h>
 
-class ObjectMarkerPublisher {
+#include <algorithm>
 
+class ObjectMarkerPublisher
+{
 public:
-  ObjectMarkerPublisher() {
+  ObjectMarkerPublisher()
+  {
     // Instantiate subscribers and publishers
     object_id_ = "object";
-    marker_publisher_ = nh_.advertise<visualization_msgs::Marker>(
-        object_id_ + "_marker", 1, true);
+    marker_publisher_ = nh_.advertise<visualization_msgs::Marker>(object_id_ + "_marker", 1, true);
     planning_scene_subscriber_ = nh_.subscribe<moveit_msgs::PlanningScene>(
-        "/move_group/monitored_planning_scene", 1,
-        std::bind(&ObjectMarkerPublisher::planningSceneCallback, this,
-                  std::placeholders::_1));
+      "/move_group/monitored_planning_scene", 1,
+      std::bind(&ObjectMarkerPublisher::planningSceneCallback, this, std::placeholders::_1));
   }
 
   /**
@@ -28,12 +28,13 @@ public:
    *
    * @param[in] msg Planning scene message
    */
-  void planningSceneCallback(const moveit_msgs::PlanningScene::ConstPtr &msg) {
+  void planningSceneCallback(const moveit_msgs::PlanningScene::ConstPtr & msg)
+  {
     // Find the object from the vector of world objects
-    const auto &objects = msg->world.collision_objects;
+    const auto & objects = msg->world.collision_objects;
     const auto object_it = std::find_if(
-        objects.cbegin(), objects.cend(),
-        [this](const auto &object) { return object.id == object_id_; });
+      objects.cbegin(), objects.cend(),
+      [this](const auto & object) { return object.id == object_id_; });
 
     // Flag indicating if the object is found
     bool object_found = false;
@@ -51,11 +52,10 @@ public:
 
     // Search in attached object, if object is not found in world objects
     if (!object_found) {
-      const auto &attached_objects =
-          msg->robot_state.attached_collision_objects;
+      const auto & attached_objects = msg->robot_state.attached_collision_objects;
       const auto attached_object_it = std::find_if(
-          attached_objects.cbegin(), attached_objects.cend(),
-          [this](const auto &object) { return object.object.id == object_id_; });
+        attached_objects.cbegin(), attached_objects.cend(),
+        [this](const auto & object) { return object.object.id == object_id_; });
       if (attached_object_it != attached_objects.cend()) {
         object_pose.pose = attached_object_it->object.pose;
         object_pose.header = attached_object_it->object.header;
@@ -111,7 +111,8 @@ private:
   std::string object_id_;
 };
 
-int main(int argc, char **argv) {
+int main(int argc, char ** argv)
+{
   ros::init(argc, argv, "marker_publisher");
 
   // Object to subscribe to the object scene and publish the marker
