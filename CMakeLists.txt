@@ -61,6 +61,10 @@ add_executable(pick_and_place src/pick_and_place.cpp)
 target_link_libraries(pick_and_place ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS pick_and_place DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+add_executable(pick_place_tutorial src/pick_place_tutorial.cpp)
+target_link_libraries(pick_place_tutorial ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS pick_place_tutorial DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 add_executable(full_example src/full_example.cpp)
 target_link_libraries(full_example ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS full_example DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
