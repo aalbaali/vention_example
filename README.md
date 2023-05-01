@@ -1,4 +1,6 @@
 # Setup instructions
+The package is targeted for ROS Noetic. A Dockerfile is provided that has ROS Noetic installed. The Docker image setup is provided below. For directly installing the package, you can skip to the [package installation section](#building-the-package)
+
 ## Docker
 To build the Docker image, run
 ```bash
@@ -19,7 +21,8 @@ cd ~/ros_ws
 catkin init
 ```
 
-# Install ROS packages 
+# Building the package
+## Installing dependencies
 Assuming the packages are already cloned into `~/ros_ws/src`, then the dependencies can be installed using
 ```bash
 cd ~/ros_ws/
@@ -28,7 +31,7 @@ rosdep install -i --from-path /home/ros/ros_ws/src --rosdistro noetic -y
 ```
 Note that this step may take sometime.
 
-# Building the package
+## Building the package
 ```bash
 # Build package
 catkin build
@@ -43,5 +46,6 @@ roslaunch vention_example pick_and_place_demo.launch
 
 # Demo
 A [video demo](vention_example_pick_and_place.mp4) is provided:
+
 ![giv](vention_example_pick_and_place.gif)
 
