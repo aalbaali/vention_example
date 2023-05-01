@@ -39,5 +39,8 @@ roslaunch vention_example pick_and_place_demo.launch
 ```
 
 # Demo
-A [video demo](vention_example_pick_and_place.mp4) is provided.
+A [video demo](vention_example_pick_and_place.mp4) is provided:
+
+![video](vention_example_pick_and_place.mp4)
+![giv](vention_example_pick_and_place.gif)
 
