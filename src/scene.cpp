@@ -1,61 +1,66 @@
-// ROS
+#include <algorithm>
+#include <log4cxx/helpers/object.h>
 #include <moveit_msgs/CollisionObject.h>
+#include <moveit_msgs/PlanningScene.h>
 #include <ros/ros.h>
-#include <shape_msgs/SolidPrimitive.h>
+#include <visualization_msgs/Marker.h>
 
-// MoveIt
-#include <moveit/move_group_interface/move_group_interface.h>
-#include <moveit/planning_scene_interface/planning_scene_interface.h>
+class ObjectMarkerPublisher {
 
-/**
- * @brief Create scene objects
- *
- * @details Create the box to be picked and placed by the robot
- *
- * @return Vector of scene objects
- */
-std::vector<moveit_msgs::CollisionObject> CreateCollisionObjects() {
-  // Box to be moved
-  moveit_msgs::CollisionObject box;
-  box.header.frame_id = "panda_link0";
-  box.id = "object";
+public:
+  ObjectMarkerPublisher() {
+    object_id_ = "object";
+    marker_publisher_ = nh_.advertise<visualization_msgs::Marker>(
+        object_id_ + "_marker", 1, true);
+    planning_scene_subscriber_ = nh_.subscribe<moveit_msgs::PlanningScene>(
+        "/move_group/monitored_planning_scene", 1,
+        std::bind(&ObjectMarkerPublisher::planningSceneCallback, this,
+                  std::placeholders::_1));
+  }
 
-  // Define box dimensions
-  box.primitives.resize(1);
-  box.primitives[0].type = shape_msgs::SolidPrimitive::BOX;
-  box.primitives[0].dimensions = {0.02, 0.02, 0.02};
+  void planningSceneCallback(const moveit_msgs::PlanningScene::ConstPtr &msg) {
+    const auto objects = msg->world.collision_objects;
+    const auto object_it = std::find_if(
+        objects.cbegin(), objects.cend(),
+        [this](const auto &object) { return object.id == object_id_; });
+    if (object_it == objects.end()) {
+      ROS_DEBUG_STREAM("'" << object_id_ << "' not found");
+      return;
+    }
 
-  // Define the pose of the object
-  box.primitive_poses.resize(1);
-  box.primitive_poses[0].position.x = 0.0;
-  box.primitive_poses[0].position.y = 0.0;
-  box.primitive_poses[0].position.z = 0;
-  box.primitive_poses[0].orientation.x = 0.0;
-  box.primitive_poses[0].orientation.y = 0.0;
-  box.primitive_poses[0].orientation.z = 0.0;
-  box.primitive_poses[0].orientation.w = 1.0;
-  box.operation = moveit_msgs::CollisionObject::ADD;
-  box.pose.position.x = 0.0;
-  box.pose.position.y = 1.0;
-  box.pose.position.z = 0.0;
-  box.pose.orientation.w = 1.0;
+    ROS_INFO_STREAM("'" << object_id_ << "' \033[92;1mfound\033[0m");
 
-  return {box};
-}
+    const auto object = *object_it;
+    // Create a Marker object
+    visualization_msgs::Marker marker;
+    marker.header = object.header;
+    marker.id = 0;
+    marker.type = visualization_msgs::Marker::ARROW;
+    marker.action = visualization_msgs::Marker::ADD;
+    marker.pose = object.pose;
+    marker.scale.x = 0.1;
+    marker.scale.y = 0.01;
+    marker.scale.z = 0.01;
+    marker.color.a = 1.0;
+    marker.color.r = 1.0;
+
+    marker_publisher_.publish(marker);
+  }
+
+private:
+  ros::NodeHandle nh_;
+  ros::Publisher marker_publisher_;
+  ros::Subscriber planning_scene_subscriber_;
+  std::string object_id_;
+};
 
 int main(int argc, char **argv) {
-  ros::init(argc, argv, "scene");
-  ros::NodeHandle nh;
-  ros::AsyncSpinner spinner(1);
-  spinner.start();
+  ros::init(argc, argv, "marker_publisher");
 
-  // Add collision objects to scene
-  const auto collision_objects = CreateCollisionObjects();
-  moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
-  planning_scene_interface.applyCollisionObjects(collision_objects);
+  // Subscribe to the planning scene topic
+  ObjectMarkerPublisher object_marker;
+  // Spin until shutdown
+  ros::spin();
 
-  // Wait a bit for ROS things to initialize
-  ros::WallDuration(1.0).sleep();
-
-  ros::waitForShutdown();
+  return 0;
 }
