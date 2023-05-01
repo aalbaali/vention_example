@@ -180,7 +180,7 @@ Visualization Manager:
             Value: true
         Loop Animation: false
         Robot Alpha: 0.5
-        Robot Color: 150; 50; 150
+        Robot Color: 57; 197; 193
         Show Robot Collision: false
         Show Robot Visual: false
         Show Trail: false
@@ -217,7 +217,7 @@ Visualization Manager:
         Voxel Coloring: Z-Axis
         Voxel Rendering: Occupied Voxels
       Scene Robot:
-        Attached Body Color: 150; 50; 150
+        Attached Body Color: 57; 204; 199
         Links:
           All Links Enabled: true
           Expand Joint Details: false
@@ -456,7 +456,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 3.1126716136932373
+      Distance: 2.3246066570281982
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -464,17 +464,17 @@ Visualization Manager:
         Value: false
       Field of View: 0.75
       Focal Point:
-        X: 0.24720343947410583
-        Y: 0.22130057215690613
-        Z: 0.38938164710998535
+        X: 0.34826162457466125
+        Y: 0.028501885011792183
+        Z: 0.3847850263118744
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.2600002884864807
+      Pitch: 0.42500028014183044
       Target Frame: panda_link0
-      Yaw: 1.1235833168029785
+      Yaw: 1.1235824823379517
     Saved: ~
 Window Geometry:
   Displays:
