@@ -3,6 +3,8 @@
 #include <moveit_msgs/CollisionObject.h>
 #include <moveit_msgs/PlanningScene.h>
 #include <ros/ros.h>
+#include <tf2/LinearMath/Quaternion.h>
+#include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 #include <visualization_msgs/Marker.h>
 
 class ObjectMarkerPublisher {
@@ -37,8 +39,14 @@ public:
     marker.id = 0;
     marker.type = visualization_msgs::Marker::ARROW;
     marker.action = visualization_msgs::Marker::ADD;
+    tf2::Quaternion orientation;
+    tf2::fromMsg(object.pose.orientation, orientation);
+    tf2::Quaternion orientation_change;
+    orientation_change.setRPY(0, -M_PI_2, 0);
+
     marker.pose = object.pose;
-    marker.scale.x = 0.1;
+    marker.pose.orientation = tf2::toMsg(orientation * orientation_change);
+    marker.scale.x = 0.3;
     marker.scale.y = 0.01;
     marker.scale.z = 0.01;
     marker.color.a = 1.0;

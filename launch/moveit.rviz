@@ -432,6 +432,14 @@ Visualization Manager:
                                 {}
       Update Interval: 0
       Value: true
+    - Class: rviz/Marker
+      Enabled: true
+      Marker Topic: /object_marker
+      Name: box_marker
+      Namespaces:
+        "": true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -448,7 +456,7 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 1.0843055248260498
+      Distance: 3.1126716136932373
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
@@ -464,9 +472,9 @@ Visualization Manager:
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.40000033378601074
+      Pitch: 0.2600002884864807
       Target Frame: panda_link0
-      Yaw: 0.9885834455490112
+      Yaw: 1.1235833168029785
     Saved: ~
 Window Geometry:
   Displays:
