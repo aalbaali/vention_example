@@ -10,6 +10,7 @@ docker run -it -e DISPLAY=$DISPLAY -e DOCKER_REPO_TAG="noetic-vention:dev" -v $P
 ```
 
 ## Creating a catkin workspace
+This step is not necessary for the Noetic container
 ```bash
 sudo apt-get update
 sudo apt-get install -y \
@@ -18,12 +19,14 @@ cd ~/ros_ws
 catkin init
 ```
 
-# Install ROS packages (this step may take few minutes)
+# Install ROS packages 
 Assuming the packages are already cloned into `~/ros_ws/src`, then the dependencies can be installed using
 ```bash
+cd ~/ros_ws/
 rosdep update
-rosdep install -i --from-path /home/ros/ros_ws/src --rosdistro melodic -y
+rosdep install -i --from-path /home/ros/ros_ws/src --rosdistro noetic -y
 ```
+Note that this step may take sometime.
 
 # Building the package
 ```bash
@@ -40,7 +43,5 @@ roslaunch vention_example pick_and_place_demo.launch
 
 # Demo
 A [video demo](vention_example_pick_and_place.mp4) is provided:
-
-![video](vention_example_pick_and_place.mp4)
 ![giv](vention_example_pick_and_place.gif)
 
